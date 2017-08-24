@@ -1,2 +1,2 @@
 # Flooding
-simple kata of a flooding in 4 directions 
+simple flooding in 4 directions 
