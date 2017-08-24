@@ -1,7 +1,7 @@
 package asdfg
 
 func Flood(terrain *[][]rune, x, y int) {
-	if (y < 0 || y >= len((*terrain)) || x < 0 || x > len((*terrain)[y])) {
+	if y < 0 || y >= len((*terrain)) || x < 0 || x >= len((*terrain)[y]) {
 		return
 	}
 	if (*terrain)[y][x] == '.' {
@@ -12,5 +12,3 @@ func Flood(terrain *[][]rune, x, y int) {
 		Flood(terrain, x, y+1)
 	}
 }
-
-

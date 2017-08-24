@@ -1,9 +1,10 @@
 package asdfg
 
 import (
-	"github.com/stretchr/testify/assert"
-	"testing"
 	"fmt"
+	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestShouldNotFloodIfTheStartIsAWall(t *testing.T) {
@@ -20,7 +21,6 @@ func TestShouldNotFloodIfTheStartIsAWall(t *testing.T) {
 
 	assert.Equal(t, expectedFlooding, terrain)
 }
-
 
 func TestShouldFloodASinglePoint(t *testing.T) {
 	terrain := [][]rune{
@@ -72,7 +72,6 @@ func TestShouldFloodLeft(t *testing.T) {
 
 	assert.Equal(t, expectedFlooding, terrain)
 }
-
 
 func TestShouldFloodUp(t *testing.T) {
 	terrain := [][]rune{
@@ -211,9 +210,31 @@ func TestShouldFloodUntilBorders(t *testing.T) {
 	assert.Equal(t, expectedFlooding, terrain)
 }
 
+func TestShouldFloodNonRectangularTerrain(t *testing.T) {
+	terrain := [][]rune{
+		[]rune(".."),
+		[]rune("..."),
+		[]rune("...."),
+		[]rune(".."),
+		[]rune("."),
+		[]rune(".......X..."),
+	}
+
+	expectedFlooding := [][]rune{
+		[]rune("XX"),
+		[]rune("XXX"),
+		[]rune("XXXX"),
+		[]rune("XX"),
+		[]rune("X"),
+		[]rune("XXXXXXXX..."),
+	}
+	Flood(&terrain, 2, 2)
+
+	assert.Equal(t, expectedFlooding, terrain)
+}
 
 func printDebug(terrain *[][]rune) {
-	for _, line := range(*terrain) {
+	for _, line := range *terrain {
 		fmt.Println(string(line))
 	}
 	fmt.Println()
