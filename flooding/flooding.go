@@ -1,4 +1,4 @@
-package asdfg
+package flooding
 
 func Flood(terrain *[][]rune, x, y int) {
 	if y < 0 || y >= len(*terrain) || x < 0 || x >= len((*terrain)[y]) {
