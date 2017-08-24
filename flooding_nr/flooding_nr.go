@@ -11,6 +11,9 @@ func Flood(terrain *[][]rune, x, y int) {
 		size += len(line)
 	}
 
+	// TODO: use real FIFO
+	// using a channel instead of a FIFO forces me to set the buffer
+	// to the maximum possible number of items for it not to hang
 	c := make(chan position, size)
 
 	c <- position{x, y}
