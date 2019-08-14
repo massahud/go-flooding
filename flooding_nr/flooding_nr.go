@@ -1,3 +1,4 @@
+// Non recursive flooding, using a queue
 package flooding_nr
 
 type position struct {
@@ -6,34 +7,26 @@ type position struct {
 }
 
 func Flood(terrain *[][]rune, x, y int) {
-	size := 0
-	for _, line := range *terrain {
-		size += len(line)
-	}
+	queue := make([]position, 0)
+	queue = append(queue, position{x,y})
 
-	// TODO: use real FIFO
-	// using a channel instead of a FIFO forces me to set the buffer
-	// to the maximum possible number of items for it not to hang
-	c := make(chan position, size)
-
-	c <- position{x, y}
-
-	for len(c) > 0 {
-		pos := <-c
+	for len(queue) > 0 {
+		pos := queue[0]
+		queue = queue[1:]
 
 		if (*terrain)[pos.y][pos.x] == '.' {
 			(*terrain)[pos.y][pos.x] = 'X'
 			if validatePos(terrain, pos.x+1, pos.y) {
-				c <- position{pos.x + 1, pos.y}
+				queue = append(queue,position{pos.x + 1, pos.y})
 			}
 			if validatePos(terrain, pos.x-1, pos.y) {
-				c <- position{pos.x - 1, pos.y}
+				queue = append(queue, position{pos.x - 1, pos.y})
 			}
 			if validatePos(terrain, pos.x, pos.y-1) {
-				c <- position{pos.x, pos.y - 1}
+				queue = append(queue, position{pos.x, pos.y - 1})
 			}
 			if validatePos(terrain, pos.x, pos.y+1) {
-				c <- position{pos.x, pos.y + 1}
+				queue = append(queue, position{pos.x, pos.y + 1})
 			}
 
 		}
